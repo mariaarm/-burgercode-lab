@@ -23,7 +23,7 @@ pipeline {
             steps {
                 echo 'Desplegando en Producción...'
                 sh 'docker rm -f burger-prod || true'
-                sh 'docker run -d --name burger-prod -p 5000:5000 burgercode-app'
+                sh 'docker run -d --name burger-prod -p 5000:5000 --network host burgercode-app'
                 echo '¡Hamburguesa servida en http://localhost:5000!'
             }
         }
