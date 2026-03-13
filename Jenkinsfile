@@ -28,4 +28,16 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            echo 'Limpiando la cocina...'
+            sh 'docker image prune -f'
+        }
+        success {
+            echo '🎉 ¡Pipeline completado con éxito!'
+        }
+        failure {
+            echo '🚑 ¡ALERTA! El pipeline ha fallado. Revisar logs.'
+        }
+    }
 }
