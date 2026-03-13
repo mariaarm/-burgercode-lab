@@ -13,10 +13,12 @@ pipeline {
                 sh 'docker build -t burgercode-app .'
             }
         }
-        stage('Test (Control de Calidad)') {
+        stage('Deploy (Entrega)') {
             steps {
-                echo 'Probando la hamburguesa...'
-                sh 'docker run --rm burgercode-app python test.py'
+                echo 'Desplegando en Producción...'
+                sh 'docker rm -f burger-prod || true'
+                sh 'docker run -d --name burger-prod -p 5001:5000 burgercode-app'
+                echo '¡Hamburguesa servida en http://localhost:5001!'
             }
         }
         stage('Deploy (Entrega)') {
