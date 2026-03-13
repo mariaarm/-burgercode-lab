@@ -13,20 +13,18 @@ pipeline {
                 sh 'docker build -t burgercode-app .'
             }
         }
-        stage('Deploy (Entrega)') {
+        stage('Test (Control de Calidad)') {
             steps {
-                echo 'Desplegando en Producción...'
-                sh 'docker rm -f burger-prod || true'
-                sh 'docker run -d --name burger-prod -p 5001:5000 burgercode-app'
-                echo '¡Hamburguesa servida en http://localhost:5001!'
+                echo 'Probando la hamburguesa...'
+                sh 'docker run --rm burgercode-app python test.py'
             }
         }
         stage('Deploy (Entrega)') {
             steps {
                 echo 'Desplegando en Producción...'
                 sh 'docker rm -f burger-prod || true'
-                sh 'docker run -d --name burger-prod -p 5000:5000 --network host burgercode-app'
-                echo '¡Hamburguesa servida en http://localhost:5000!'
+                sh 'docker run -d --name burger-prod -p 5001:5000 burgercode-app'
+                echo '¡Hamburguesa servida en http://localhost:5001!'
             }
         }
     }
